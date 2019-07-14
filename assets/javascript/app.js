@@ -10,6 +10,29 @@ var questionTwo = {
 	answer: "SECOND CHOICE"
 };
 
+function timerStart(secs) {
+	var intervalID;
+	clearInterval(intervalID);
+	intervalId = setInterval(decrement, 1000);
+
+	function decrement() {
+		secs--;
+		$(".timer").html("<h2>" + secs + "<h2>");
+
+		//*IF THE PLAYER RUNS OUT OF TIME
+		if (secs <= 0) {
+			clearInterval(intervalId);
+			board.outOfTime();
+			board.incorrect++;
+			// TODO user gets one incorrect and creates a new question
+		}
+	}
+}
+
+function timerStop() {
+	clearInterval(intervalId);
+}
+
 var board = {
 	correct: 0,
 	incorrect: 0,
@@ -17,33 +40,13 @@ var board = {
 	currentQuestion: null,
 	currentChoices: null,
 	answer: null,
-	winningImage: null,
-	losingImage: null,
+
+	winningImage: "CORRECT ANSWER",
+	losingImage: "WRONG ANSWER",
+	outOfTimeImage: "OUT OF TIME",
 
 	questions: [questionOne, questionTwo],
 	onQuestion: 0,
-
-	timerStart: function(secs) {
-		var intervalID;
-		clearInterval(intervalID);
-		intervalId = setInterval(decrement, 1000);
-
-		function decrement() {
-			secs--;
-			$(".timer").html("<h2>" + secs + "<h2>");
-
-			if (secs <= 0) {
-				clearInterval(intervalId);
-				this.incorrect++;
-				// TODO user gets one incorrect and creates a new question
-				console.log("OUT OF TIME");
-			}
-		}
-	},
-
-	timerStop: function() {
-		clearInterval(intervalId);
-	},
 
 	drawBoard: function() {
 		// TODO clear off preivous question
@@ -68,26 +71,59 @@ var board = {
 
 			//*MOVE TO NEXT QUESTION
 			this.onQuestion++;
-			this.timerStart(30);
+			timerStart(10);
 			waitClick();
 		} else {
-			// TODO Show scoreboard
-			// TODO reset timer
 			// TODO include a reset button
-			alert("SHOW SCOREBOARD AND RESET BUTTON");
+			clearInterval(intervalId);
+			newDiv = $("<div class='scoreboard'>");
+			correctDiv = $("<div id='correctscore'>");
+			incorrectDiv = $("<div id='incorrectscore'>");
+			correctDiv.html("<span>'Correct Answers :" + this.correct + "</span>");
+			incorrectDiv.html(
+				"<span>'Incorrect Answers :" + this.incorrect + "</span>"
+			);
+			newDiv.append(correctDiv, incorrectDiv);
+			$(".choices").append(newDiv);
 		}
+	},
+
+	outOfTime: function() {
+		//!CLEARS BOARD DISPLAY IMAGE FOR 5 SECS RESETS BOARD
+		this.incorrect++;
+		$(".question").empty();
+
+		//*displays timeout image
+		$(".choices").html(this.outOfTimeImage);
+
+		//*redraws board after 5 secs
+		setTimeout(function() {
+			board.drawBoard();
+		}, 5000);
 	},
 
 	correctChoice: function() {
 		this.correct++;
-		this.timerStop();
-		this.drawBoard();
+		//*clears board
+		timerStop();
+		$(".question").empty();
+		$(".choices").html(this.winningImage);
+		//*redraws board after 5 secs
+		setTimeout(function() {
+			board.drawBoard();
+		}, 5000);
 	},
 
 	wrongChoice: function() {
 		this.incorrect++;
-		this.timerStop();
-		this.drawBoard();
+		//*clears board
+		timerStop();
+		$(".question").empty();
+		$(".choices").html(this.losingImage);
+		//*redraws board after 5 secs
+		setTimeout(function() {
+			board.drawBoard();
+		}, 5000);
 	},
 
 	//* checks the users guess
