@@ -23,7 +23,6 @@ function timerStart(secs) {
 		if (secs <= 0) {
 			clearInterval(intervalId);
 			board.outOfTime();
-			board.incorrect++;
 			// TODO user gets one incorrect and creates a new question
 		}
 	}
@@ -75,13 +74,15 @@ var board = {
 			waitClick();
 		} else {
 			// TODO include a reset button
+			// TODO reset scores
+			$(".timer").empty();
 			clearInterval(intervalId);
 			newDiv = $("<div class='scoreboard'>");
 			correctDiv = $("<div id='correctscore'>");
 			incorrectDiv = $("<div id='incorrectscore'>");
-			correctDiv.html("<span>'Correct Answers :" + this.correct + "</span>");
+			correctDiv.html("<span>'Correct Answers: " + this.correct + "</span>");
 			incorrectDiv.html(
-				"<span>'Incorrect Answers :" + this.incorrect + "</span>"
+				"<span>'Incorrect Answers: " + this.incorrect + "</span>"
 			);
 			newDiv.append(correctDiv, incorrectDiv);
 			$(".choices").append(newDiv);
