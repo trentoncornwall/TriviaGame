@@ -7,20 +7,25 @@ var questionOne = {
 		"texas chainsaw massacre",
 		"the fog"
 	],
-	answer: "halloween"
+	answer: "halloween",
+
+	image: "assets/images/halloween.gif"
 };
 
 var questionTwo = {
 	question:
 		"In what horror movie does the protagonist write a book that contains only the line 'All work and no play makes Jack a dull boy' repeated over and over and over?",
 	choices: ["the shining", "the devil's rain", "writer's block", "room 1408"],
-	answer: "the shining"
+	answer: "the shining",
+
+	image: "assets/images/theshining.webp"
 };
 
 var questionThree = {
 	question: "What was the original title of The Blob?",
 	choices: ["the lump", "the glob", "the goop", "the creature"],
-	answer: "the glob"
+	answer: "the glob",
+	image: "assets/images/theblob.webp"
 };
 
 var questionFour = {
@@ -32,13 +37,15 @@ var questionFour = {
 		"friday the 13th, part iii: 3d",
 		"the blair witch project"
 	],
-	answer: "the blair witch project"
+	answer: "the blair witch project",
+	image: "assets/images/theblairwitch.gif"
 };
 
 var questionFive = {
 	question: "What was leatherface's choice weapon?",
 	choices: ["knife", "axe", "chainsaw", "bat"],
-	answer: "chainsaw"
+	answer: "chainsaw",
+	image: "assets/images/leatherace.webp"
 };
 
 var questionSix = {
@@ -50,7 +57,8 @@ var questionSix = {
 		"captain howdy",
 		"captain harry"
 	],
-	answer: "captain howdy"
+	answer: "captain howdy",
+	image: "assets/images/captainhowdy.gif"
 };
 
 var questionSeven = {
@@ -61,27 +69,31 @@ var questionSeven = {
 		"camp waziyata",
 		"camp timber lake"
 	],
-	answer: "camp crystal lake"
+	answer: "camp crystal lake",
+	image: "assets/images/lake.gif"
 };
 
 var questionEight = {
 	question: "What was the name of the killer clown in Stephen King's 'IT'?",
 	choices: ["pennywise", "pumpernickel", "monster", "clowny"],
-	answer: "pennywise"
+	answer: "pennywise",
+	image: "assets/images/clown.webp"
 };
 
 var questionNine = {
 	question:
 		"How many people associated with 'The Exorcist' died during the film's year-long shoot?",
 	choices: ["none", "9 people", "5 people", "2 people"],
-	answer: "9 people"
+	answer: "9 people",
+	image: "assets/images/ex.gif"
 };
 
 var questionTen = {
 	question:
 		"Which one of these famous slashers has accumulated the highest body count?",
 	choices: ["freddy krueger", "michael myers", "jason voorhees", "leatherface"],
-	answer: "jason voorhees"
+	answer: "jason voorhees",
+	image: "assets/images/end.gif"
 };
 function timerStart(secs) {
 	var intervalID;
@@ -112,10 +124,7 @@ var board = {
 	currentQuestion: null,
 	currentChoices: null,
 	answer: null,
-
-	winningImage: "CORRECT ANSWER",
-	losingImage: "WRONG ANSWER",
-	outOfTimeImage: "OUT OF TIME",
+	image: null,
 
 	questions: [
 		questionOne,
@@ -141,6 +150,7 @@ var board = {
 			this.currentQuestion = this.questions[this.onQuestion].question;
 			this.currentChoices = this.questions[this.onQuestion].choices;
 			this.answer = this.questions[this.onQuestion].answer;
+			this.image = this.questions[this.onQuestion].image;
 
 			//* DISPLAYS QUESTIONS
 			$(".question").html("<span>" + this.currentQuestion + "</span>");
@@ -191,8 +201,10 @@ var board = {
 		this.correct++;
 		//*clears board
 		timerStop();
-		$(".question").empty();
-		$(".choices").html(this.winningImage);
+		$(".question").html("Correct!");
+		newDiv = $("<div class='image' id='giphy'>");
+		newDiv.html("<img src='" + this.image + "'>");
+		$(".choices").html(newDiv);
 		//*redraws board after 5 secs
 		setTimeout(function() {
 			board.drawBoard();
@@ -203,8 +215,10 @@ var board = {
 		this.incorrect++;
 		//*clears board
 		timerStop();
-		$(".question").empty();
-		$(".choices").html(this.losingImage);
+		$(".question").html("Incorrect, correct answer: " + this.answer + ".");
+		newDiv = $("<div class='image'>");
+		newDiv.html("<img src='" + this.image + "'>");
+		$(".choices").html(newDiv);
 		//*redraws board after 5 secs
 		setTimeout(function() {
 			board.drawBoard();
