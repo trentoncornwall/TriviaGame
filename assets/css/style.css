@@ -1,5 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Gloria+Hallelujah&display=swap");
+
 body {
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
 	height: 100vh;
+	background-color: #313131;
 	display: grid;
 	grid-template-columns: 1fr 3fr 1fr;
 	grid-template-rows: 1fr 2fr 1fr;
@@ -11,6 +16,8 @@ body {
 
 .board {
 	grid-area: board;
+	border-radius: 25px;
+	background-color: #4b4b4b;
 	display: grid;
 	grid-template-columns: 5% 90% 5%;
 	grid-template-rows: 1fr 1fr 1fr 60%;
@@ -22,6 +29,9 @@ body {
 }
 
 .title {
+	letter-spacing: 3px;
+	font-family: "Gloria Hallelujah", cursive;
+	font-size: 30px;
 	grid-area: title;
 	display: flex;
 	flex-wrap: nowrap;
@@ -38,6 +48,7 @@ body {
 }
 
 .question {
+	font-size: 24px;
 	grid-area: question;
 	display: flex;
 	flex-wrap: nowrap;
@@ -56,9 +67,28 @@ body {
 }
 
 .option {
+	letter-spacing: 2.5px;
+	font-weight: bold;
+	font-variant: small-caps;
+	font-size: 20px;
 	background: tomato;
+	border-radius: 10px;
 	margin: 5px;
 	padding: 5px;
 	width: 100%;
 	height: 40px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: space-around;
+}
+
+.option:hover {
+	box-shadow: 5px 5px 10px #888888;
+	background: black;
+	margin-left: -10px;
+	margin-right: -10px;
 }

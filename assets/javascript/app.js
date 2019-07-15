@@ -154,7 +154,7 @@ var board = {
 
 			//*MOVE TO NEXT QUESTION
 			this.onQuestion++;
-			// timerStart(10);
+			timerStart(15);
 			waitClick();
 		} else {
 			// TODO include a reset button
