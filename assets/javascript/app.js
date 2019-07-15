@@ -172,11 +172,11 @@ var board = {
 			$(".timer").empty();
 			clearInterval(intervalId);
 			newDiv = $("<div class='scoreboard'>");
-			correctDiv = $("<div id='correctscore'>");
-			incorrectDiv = $("<div id='incorrectscore'>");
-			correctDiv.html("<span>'Correct Answers: " + this.correct + "</span>");
+			correctDiv = $("<div id='score'>");
+			incorrectDiv = $("<div id='score'>");
+			correctDiv.html("<span>Correct Answers: " + this.correct + "</span>");
 			incorrectDiv.html(
-				"<span>'Incorrect Answers: " + this.incorrect + "</span>"
+				"<span>Incorrect Answers: " + this.incorrect + "</span>"
 			);
 			newDiv.append(correctDiv, incorrectDiv);
 			$(".choices").append(newDiv);
