@@ -1,6 +1,5 @@
 var questionOne = {
-	question:
-		"What classic horror movie features a serial killer in a William Shatner mask?",
+	question: "What classic horror movie features a serial killer in a William Shatner mask?",
 	choices: [
 		"friday the 13th",
 		"halloween",
@@ -13,8 +12,7 @@ var questionOne = {
 };
 
 var questionTwo = {
-	question:
-		"In what horror movie does the protagonist write a book that contains only the line 'All work and no play makes Jack a dull boy' repeated over and over and over?",
+	question: "In what horror movie does the protagonist write a book that contains only the line 'All work and no play makes Jack a dull boy' repeated over and over and over?",
 	choices: ["the shining", "the devil's rain", "writer's block", "room 1408"],
 	answer: "the shining",
 
@@ -29,8 +27,7 @@ var questionThree = {
 };
 
 var questionFour = {
-	question:
-		"What horror film caused some theatres to suggest that patrons prone to motion sickness sit in the aisle seats?",
+	question: "What horror film caused some theatres to suggest that patrons prone to motion sickness sit in the aisle seats?",
 	choices: [
 		"vertigo",
 		"mimic",
@@ -49,8 +46,7 @@ var questionFive = {
 };
 
 var questionSix = {
-	question:
-		"What was the name that the demon from 'The Exorcist' used to contact Regan?",
+	question: "What was the name that the demon from 'The Exorcist' used to contact Regan?",
 	choices: [
 		"captain spaulding",
 		"captain jack",
@@ -81,20 +77,19 @@ var questionEight = {
 };
 
 var questionNine = {
-	question:
-		"How many people associated with 'The Exorcist' died during the film's year-long shoot?",
+	question: "How many people associated with 'The Exorcist' died during the film's year-long shoot?",
 	choices: ["none", "9 people", "5 people", "2 people"],
 	answer: "9 people",
 	image: "assets/images/ex.gif"
 };
 
 var questionTen = {
-	question:
-		"Which one of these famous slashers has accumulated the highest body count?",
+	question: "Which one of these famous slashers has accumulated the highest body count?",
 	choices: ["freddy krueger", "michael myers", "jason voorhees", "leatherface"],
 	answer: "jason voorhees",
 	image: "assets/images/end.gif"
 };
+
 function timerStart(secs) {
 	var intervalID;
 	clearInterval(intervalID);
@@ -140,7 +135,7 @@ var board = {
 	],
 	onQuestion: 0,
 
-	drawBoard: function() {
+	drawBoard: function () {
 		// TODO clear off preivous question
 		$(".question").empty();
 		$(".choices").empty();
@@ -164,7 +159,7 @@ var board = {
 
 			//*MOVE TO NEXT QUESTION
 			this.onQuestion++;
-			timerStart(15);
+			timerStart(20);
 			waitClick();
 		} else {
 			// TODO include a reset button
@@ -178,55 +173,70 @@ var board = {
 			incorrectDiv.html(
 				"<span>Incorrect Answers: " + this.incorrect + "</span>"
 			);
-			newDiv.append(correctDiv, incorrectDiv);
+			resetDiv = $("<div id='reset'>").text('reset')
+			newDiv.append(correctDiv, incorrectDiv, resetDiv);
 			$(".choices").append(newDiv);
+			waitClick();
 		}
 	},
 
-	outOfTime: function() {
-		//!CLEARS BOARD DISPLAY IMAGE FOR 5 SECS RESETS BOARD
+	outOfTime: function () {
 		this.incorrect++;
-		$(".question").empty();
+		Div = $("<div>");
+		Div.attr("class", "answer").text('out of time!');
+		$(".question").html(Div);
 
 		//*displays timeout image
-		$(".choices").html(this.outOfTimeImage);
+		newDiv = $("<div class='image' id='giphy'>");
+		newDiv.html("<img src='" + this.image + "'>");
+		$(".choices").html(newDiv);
 
 		//*redraws board after 5 secs
-		setTimeout(function() {
+		setTimeout(function () {
 			board.drawBoard();
 		}, 5000);
 	},
 
-	correctChoice: function() {
+	correctChoice: function () {
 		this.correct++;
-		//*clears board
 		timerStop();
-		$(".question").html("Correct!");
+
+		//*correct display
+		Div = $("<div>");
+		Div.attr("class", "answer").text('correct!');
+		$(".question").html(Div);
+		// $(".question").html("Correct!").add('id', 'correct ');
+
+		//*show image
 		newDiv = $("<div class='image' id='giphy'>");
 		newDiv.html("<img src='" + this.image + "'>");
 		$(".choices").html(newDiv);
 		//*redraws board after 5 secs
-		setTimeout(function() {
+		setTimeout(function () {
 			board.drawBoard();
 		}, 5000);
 	},
 
-	wrongChoice: function() {
+	wrongChoice: function () {
 		this.incorrect++;
-		//*clears board
 		timerStop();
-		$(".question").html("Incorrect, correct answer: " + this.answer + ".");
+		//*correct display
+		Div = $("<div>");
+		Div.attr("class", "answer").text(`incorrect, the answer is: ${this.answer}`);
+		$(".question").html(Div);
+
+		//*display image
 		newDiv = $("<div class='image'>");
 		newDiv.html("<img src='" + this.image + "'>");
 		$(".choices").html(newDiv);
 		//*redraws board after 5 secs
-		setTimeout(function() {
+		setTimeout(function () {
 			board.drawBoard();
 		}, 5000);
 	},
 
 	//* checks the users guess
-	check: function(choice) {
+	check: function (choice) {
 		//* if guess is correct
 		if (choice === this.answer) {
 			this.correctChoice();
@@ -234,25 +244,32 @@ var board = {
 			this.wrongChoice();
 		}
 	}
+
 };
 
 //* functions for clicking the options
 function waitClick() {
-	$("#0").on("click", function() {
+	$("#0").on("click", function () {
 		guess = $(this).text();
 		board.check(guess);
 	});
-	$("#1").on("click", function() {
+	$("#1").on("click", function () {
 		guess = $(this).text();
 		board.check(guess);
 	});
-	$("#2").on("click", function() {
+	$("#2").on("click", function () {
 		guess = $(this).text();
 		board.check(guess);
 	});
-	$("#3").on("click", function() {
+	$("#3").on("click", function () {
 		guess = $(this).text();
 		board.check(guess);
+	});
+	$("#reset").on("click", function () {
+		board.correct = 0;
+		board.incorrect = 0;
+		board.onQuestion = 0;
+		board.drawBoard();
 	});
 }
 

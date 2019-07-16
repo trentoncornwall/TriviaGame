@@ -5,7 +5,12 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	height: 100vh;
 	background-color: #313131;
-	background-image: linear-gradient(rgb(14, 14, 14), #4b4b4b);
+	/* background-image: linear-gradient(rgb(14, 14, 14), #4b4b4b); */
+	background-image: url("../images/background.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
 	display: grid;
 	grid-template-columns: 1fr 3fr 1fr;
 	grid-template-rows: 1fr 2fr 1fr;
@@ -27,6 +32,9 @@ body {
 		". timer ."
 		". question ."
 		". choices .";
+	-webkit-box-shadow: -2px 15px 6px 3px rgba(0, 0, 0, 0.62);
+	-moz-box-shadow: -2px 15px 6px 3px rgba(0, 0, 0, 0.62);
+	box-shadow: -2px 15px 6px 3px rgba(0, 0, 0, 0.62);
 }
 
 .title {
@@ -45,14 +53,16 @@ body {
 	content: "";
 	position: absolute;
 	width: 100%;
-	height: 1px;
-	background: black;
+	height: 3px;
+	background: #383838;
 	top: 100%;
 	left: 0;
 }
 
 .timer {
 	grid-area: timer;
+	font-size: 22px;
+	letter-spacing: 3px;
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: center;
@@ -71,6 +81,7 @@ body {
 .choices {
 	grid-area: choices;
 	display: flex;
+	padding: 10px;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: center;
@@ -99,10 +110,12 @@ body {
 }
 
 .option:hover {
-	box-shadow: 5px 5px 10px #888888;
 	background: black;
 	margin-left: -10px;
 	margin-right: -10px;
+	-webkit-box-shadow: 8px 8px 14px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 8px 8px 14px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 8px 8px 14px 0px rgba(0, 0, 0, 0.75);
 }
 
 .image {
@@ -118,9 +131,11 @@ img {
 	width: 100%;
 	height: 100%;
 	margin-bottom: 10px;
+	filter: drop-shadow(0 0 5px rgb(0, 0, 0));
 }
 
 .scoreboard {
+
 	display: flex;
 	height: 100%;
 	width: 100%;
@@ -132,6 +147,9 @@ img {
 }
 
 #score {
+	position: relative;
+	color: tomato;
+	font-family: "Gloria Hallelujah", cursive;
 	font-size: 24px;
 	margin: 5px;
 	padding: 5px;
@@ -143,4 +161,63 @@ img {
 	justify-content: flex-start;
 	align-items: center;
 	align-content: space-around;
+}
+
+.answer {
+	font-family: "Gloria Hallelujah", cursive;
+	font-weight: bold;
+	color: tomato;
+	font-size: 24px;
+	font-variant: small-caps;
+}
+
+#reset {
+	letter-spacing: 2.5px;
+	font-weight: bold;
+	font-variant: small-caps;
+	font-size: 20px;
+	background: tomato;
+	border-radius: 10px;
+	margin: 5px;
+	padding: 5px;
+	width: 100%;
+	height: 40px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: space-around;
+}
+
+#reset:hover {
+	background: black;
+	margin-left: -10px;
+	margin-right: -10px;
+	-webkit-box-shadow: 8px 8px 14px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 8px 8px 14px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 8px 8px 14px 0px rgba(0, 0, 0, 0.75);
+}
+
+
+@media screen and (max-width: 960px) {
+	body {
+		grid-template-columns: 10% 80% 10%;
+		grid-template-rows: 1fr 2fr 1fr;
+	}
+}
+
+@media screen and (max-width: 780px) {
+	body {
+		grid-template-columns: 5% 90% 5%;
+		grid-template-rows: 10% 80% 10%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	body {
+		grid-template-columns: 1% 98% 1%;
+		grid-template-rows: 5% 90% 5%;
+	}
 }
